@@ -14,8 +14,7 @@ import microgram.api.java.Profiles;
 import microgram.api.java.Result;
 import microgram.api.rest.RestProfiles;
 
-//TODO Make this class concrete
-public abstract class _TODO_RestProfilesClient extends RestClient implements Profiles {
+public class _TODO_RestProfilesClient extends RestClient implements Profiles {
 
 	public _TODO_RestProfilesClient(URI serverUri) {
 		super(serverUri, RestProfiles.PATH);
@@ -47,7 +46,11 @@ public abstract class _TODO_RestProfilesClient extends RestClient implements Pro
 	}
 	
 	public Result<List<Profile>> search( String prefix ) {
-		return null;
+		Response r = target
+				.request()
+				.accept(MediaType.APPLICATION_JSON)
+				.get();
+		return super.responseContents(r, Status.OK, new GenericType<List<Profile>>() {});
 	}
 	
 	public Result<Void> follow( String userId1, String userId2, boolean isFollowing) {
@@ -60,6 +63,10 @@ public abstract class _TODO_RestProfilesClient extends RestClient implements Pro
 	}
 	
 	public Result<Boolean> isFollowing( String userId1, String userId2) {
-		return null;
+		Response r = target.path(userId1).path("following").path(userId2)
+				.request()
+				.accept(MediaType.APPLICATION_JSON)
+				.get();
+		return super.responseContents(r, Status.OK, new GenericType<Boolean>() {});
 	}
 }
