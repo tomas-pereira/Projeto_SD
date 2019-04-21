@@ -24,8 +24,7 @@ public class _TODO_RestProfilesResources extends RestResource implements RestPro
 	
 	@Override
 	public void createProfile(Profile profile) {
-		// TODO Auto-generated method stub
-		
+		resultOrThrow(impl.createProfile(profile));
 	}
 
 	@Override
@@ -36,14 +35,12 @@ public class _TODO_RestProfilesResources extends RestResource implements RestPro
 
 	@Override
 	public void follow(String userId1, String userId2, boolean isFollowing) {
-		// TODO Auto-generated method stub
-		
+		super.resultOrThrow(impl.follow(userId1, userId2, isFollowing));
 	}
 
 	@Override
 	public boolean isFollowing(String userId1, String userId2) {
-		// TODO Auto-generated method stub
-		return false;
+		return super.resultOrThrow(impl.isFollowing(userId1, userId2));
 	}
 
 }
