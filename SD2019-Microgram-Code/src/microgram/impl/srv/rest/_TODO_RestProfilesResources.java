@@ -13,7 +13,7 @@ public class _TODO_RestProfilesResources extends RestResource implements RestPro
 
 	final Profiles impl;
 	
-	public _TODO_RestProfilesResources(URI serverUri) {
+	public _TODO_RestProfilesResources(String serverUri) {
 		this.impl = new JavaProfiles();
 	}
 	
@@ -24,7 +24,7 @@ public class _TODO_RestProfilesResources extends RestResource implements RestPro
 	
 	@Override
 	public void createProfile(Profile profile) {
-		resultOrThrow(impl.createProfile(profile));
+		super.resultOrThrow(impl.createProfile(profile));
 	}
 
 	@Override

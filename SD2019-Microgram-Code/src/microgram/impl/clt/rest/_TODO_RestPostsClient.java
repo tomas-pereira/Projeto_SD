@@ -52,15 +52,21 @@ public class _TODO_RestPostsClient extends RestClient implements Posts {
 
 	@Override
 	public Result<Void> like(String postId, String userId, boolean isLiked) {
-		// TODO Auto-generated method stub
-		return null;
+		Response r = target.path(postId).path("likes").path(userId)
+				.request()
+				.accept(MediaType.APPLICATION_JSON)
+				.put(Entity.entity(isLiked, MediaType.APPLICATION_JSON));
+		return super.responseContents(r, Status.OK, new GenericType<Void>(){});
 	}
 
 
 	@Override
 	public Result<Boolean> isLiked(String postId, String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		Response r = target.path(postId).path("likes").path(userId)
+				.request()
+				.accept(MediaType.APPLICATION_JSON)
+				.get();
+		return super.responseContents(r, Status.OK, new GenericType<Boolean>(){});
 	}
 
 

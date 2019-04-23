@@ -23,8 +23,7 @@ public class _TODO_RestPostsResources extends RestResource implements RestPosts 
 	
 	@Override
 	public void deletePost(String postId) {
-		// TODO Auto-generated method stub
-		
+		super.resultOrThrow(impl.deletePost(postId));
 	}
 
 	@Override
