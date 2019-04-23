@@ -6,7 +6,7 @@ import microgram.api.Post;
 import microgram.api.java.Posts;
 import microgram.api.java.Result;
 
-public abstract class _TODO_RetryPostsClient extends RetryClient implements Posts {
+public class _TODO_RetryPostsClient extends RetryClient implements Posts {
 
 	final Posts impl;
 	

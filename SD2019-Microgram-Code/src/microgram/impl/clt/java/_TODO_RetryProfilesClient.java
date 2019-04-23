@@ -6,7 +6,7 @@ import microgram.api.Profile;
 import microgram.api.java.Profiles;
 import microgram.api.java.Result;
 
-public abstract class _TODO_RetryProfilesClient extends RetryClient implements Profiles {
+public class _TODO_RetryProfilesClient extends RetryClient implements Profiles {
 
 	final Profiles impl;
 

@@ -42,8 +42,11 @@ public class _TODO_RestPostsClient extends RestClient implements Posts {
 
 	@Override
 	public Result<Void> deletePost(String postId) {
-		// TODO Auto-generated method stub
-		return null;
+		Response r = target.path(postId)
+				.request()
+				.accept(MediaType.APPLICATION_JSON)
+				.delete();
+		return super.responseContents(r, Status.OK, new GenericType<Void>(){});
 	}
 
 
@@ -63,14 +66,20 @@ public class _TODO_RestPostsClient extends RestClient implements Posts {
 
 	@Override
 	public Result<List<String>> getPosts(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		Response r = target.path("from").path(userId)
+				.request()
+				.accept(MediaType.APPLICATION_JSON)
+				.get();
+		return super.responseContents(r, Status.OK, new GenericType<List<String>>(){});
 	}
 
 
 	@Override
 	public Result<List<String>> getFeed(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		Response r = target.path("feed").path(userId)
+				.request()
+				.accept(MediaType.APPLICATION_JSON)
+				.get();
+		return super.responseContents(r, Status.OK, new GenericType<List<String>>(){});
 	}
 }
