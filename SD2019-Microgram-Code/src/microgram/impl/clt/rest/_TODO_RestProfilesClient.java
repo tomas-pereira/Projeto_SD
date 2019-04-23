@@ -46,7 +46,7 @@ public class _TODO_RestProfilesClient extends RestClient implements Profiles {
 	}
 	
 	public Result<List<Profile>> search( String prefix ) {
-		Response r = target
+		Response r = target.queryParam("query", prefix)
 				.request()
 				.accept(MediaType.APPLICATION_JSON)
 				.get();

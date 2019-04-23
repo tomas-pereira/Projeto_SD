@@ -29,8 +29,8 @@ public class _TODO_RestProfilesResources extends RestResource implements RestPro
 
 	@Override
 	public List<Profile> search(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return super.resultOrThrow(impl.search(name));
 	}
 
 	@Override
