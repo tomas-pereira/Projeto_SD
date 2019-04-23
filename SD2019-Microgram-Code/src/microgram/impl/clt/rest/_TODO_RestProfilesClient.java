@@ -59,6 +59,7 @@ public class _TODO_RestProfilesClient extends RestClient implements Profiles {
 				.accept(MediaType.APPLICATION_JSON)
 				.put(Entity.entity(isFollowing, MediaType.APPLICATION_JSON));
 		return super.verifyResponse(r, Status.OK);
+		
 	}
 	
 	public Result<Boolean> isFollowing( String userId1, String userId2) {
