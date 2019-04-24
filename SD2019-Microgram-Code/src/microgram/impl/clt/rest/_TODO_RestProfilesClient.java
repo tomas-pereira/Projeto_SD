@@ -40,7 +40,6 @@ public class _TODO_RestProfilesClient extends RestClient implements Profiles {
 	public Result<Void> deleteProfile( String userId ) {
 		Response r = target.path(userId)
 				.request()
-				.accept(MediaType.APPLICATION_JSON)
 				.delete();
 		return super.verifyResponse(r, Status.NO_CONTENT);
 	}
@@ -56,7 +55,6 @@ public class _TODO_RestProfilesClient extends RestClient implements Profiles {
 	public Result<Void> follow( String userId1, String userId2, boolean isFollowing) {
 		Response r = target.path(userId1).path("following").path(userId2)
 				.request()
-				.accept(MediaType.APPLICATION_JSON)
 				.put(Entity.entity(isFollowing, MediaType.APPLICATION_JSON));
 		return super.verifyResponse(r, Status.OK);
 		
