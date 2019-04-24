@@ -63,6 +63,7 @@ public class _TODO_RestProfilesClient extends RestClient implements Profiles {
 	public Result<Boolean> isFollowing( String userId1, String userId2) {
 		Response r = target.path(userId1).path("following").path(userId2)
 				.request()
+				.accept(MediaType.APPLICATION_JSON)
 				.get();
 		return super.responseContents(r, Status.OK, new GenericType<Boolean>() {});
 	}
