@@ -37,14 +37,23 @@ public class JavaPosts implements Posts {
 
 	@Override
 	public Result<Void> deletePost(String postId) {
-		return Result.error(ErrorCode.NOT_IMPLEMENTED);
+		Post post = posts.remove(postId);
+		
+		if(post == null)
+			return error(NOT_FOUND);
+		else {
+			likes.remove(postId);
+			userPosts.get(post.getOwnerId()).remove(postId);
+			return ok();
+		}
+		
 	}
 
 	@Override
 	public Result<String> createPost(Post post) {
 		String postId = Hash.of(post.getOwnerId(), post.getMediaUrl());
 		if (posts.putIfAbsent(postId, post) == null) {
-
+			
 			likes.put(postId, new HashSet<>());
 
 			Set<String> posts = userPosts.get(post.getOwnerId());
@@ -96,6 +105,7 @@ public class JavaPosts implements Posts {
 
 	@Override
 	public Result<List<String>> getFeed(String userId) {
+		//Profile user = users.get(userId);
 		return error(NOT_IMPLEMENTED);
 	}
 }
