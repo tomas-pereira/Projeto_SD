@@ -20,11 +20,18 @@ import microgram.api.java.Result;
 import microgram.api.java.Result.ErrorCode;
 import utils.Hash;
 
+import microgram.api.Profile;
+import microgram.api.java.Profiles;
+
 public class JavaPosts implements Posts {
 
 	protected Map<String, Post> posts = new HashMap<>();
 	protected Map<String, Set<String>> likes = new HashMap<>();
 	protected Map<String, Set<String>> userPosts = new HashMap<>();
+	
+	public JavaPosts() {
+		
+	}
 
 	@Override
 	public Result<Post> getPost(String postId) {
@@ -105,7 +112,7 @@ public class JavaPosts implements Posts {
 
 	@Override
 	public Result<List<String>> getFeed(String userId) {
-		//Profile user = users.get(userId);
+		//Profiles user = users.get(userId);
 		return error(NOT_IMPLEMENTED);
 	}
 }

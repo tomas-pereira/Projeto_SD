@@ -5,6 +5,7 @@ import static microgram.api.java.Result.ok;
 import static microgram.api.java.Result.ErrorCode.CONFLICT;
 import static microgram.api.java.Result.ErrorCode.NOT_FOUND;
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -12,10 +13,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import discovery.Discovery;
+import impl.clt.ClientFactory;
 import microgram.api.Profile;
 import microgram.api.java.Result;
 import microgram.api.java.Result.ErrorCode;
 import microgram.impl.srv.rest.RestResource;
+
+import microgram.api.Post;
+import microgram.api.java.Posts;
 
 public class JavaProfiles extends RestResource implements microgram.api.java.Profiles {
 
@@ -23,6 +29,10 @@ public class JavaProfiles extends RestResource implements microgram.api.java.Pro
 	protected Map<String, Set<String>> followers = new HashMap<>();
 	protected Map<String, Set<String>> following = new HashMap<>();
 	
+	public JavaProfiles() {
+		URI[] mediaURIs = Discovery.findUrisOf( "PostsRestServer", 1);
+		//Posts posts = new ClientFactory.createPostsClient(mediaURIs[0]);
+	}
 	
 	@Override
 	public Result<Profile> getProfile(String userId) {
