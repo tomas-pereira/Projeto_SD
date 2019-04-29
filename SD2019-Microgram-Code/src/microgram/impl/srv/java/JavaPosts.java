@@ -6,6 +6,7 @@ import static microgram.api.java.Result.ErrorCode.CONFLICT;
 import static microgram.api.java.Result.ErrorCode.NOT_FOUND;
 import static microgram.api.java.Result.ErrorCode.NOT_IMPLEMENTED;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import discovery.Discovery;
 import microgram.api.Post;
 import microgram.api.java.Posts;
 import microgram.api.java.Result;
@@ -30,7 +32,7 @@ public class JavaPosts implements Posts {
 	protected Map<String, Set<String>> userPosts = new HashMap<>();
 	
 	public JavaPosts() {
-		
+		URI[] mediaURIs = Discovery.findUrisOf( "ProfiesRestServer", 1);
 	}
 
 	@Override
