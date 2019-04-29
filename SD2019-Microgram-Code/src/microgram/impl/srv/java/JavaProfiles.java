@@ -89,4 +89,13 @@ public class JavaProfiles extends RestResource implements microgram.api.java.Pro
 		else
 			return ok(s1.contains( userId2 ) && s2.contains( userId1 ));
 	}
+
+	@Override
+	public Result<Set<Profile>> getFollwed(String userId) {
+		Profile res = users.get( userId );
+		if( res == null ) 
+			return error(NOT_FOUND);
+
+		return ok();
+	}
 }

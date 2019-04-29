@@ -1,6 +1,7 @@
 package microgram.impl.clt.java;
 
 import java.util.List;
+import java.util.Set;
 
 import microgram.api.Profile;
 import microgram.api.java.Profiles;
@@ -42,6 +43,11 @@ public class _TODO_RetryProfilesClient extends RetryClient implements Profiles {
 	@Override
 	public Result<Boolean> isFollowing(String userId1, String userId2) {
 		return reTry( () -> impl.isFollowing(userId1, userId2));
+	}
+
+	@Override
+	public Result<Set<Profile>> getFollwed(String userId) {
+		return reTry( ()-> impl.getFollwed(userId));
 	}
 
 }
