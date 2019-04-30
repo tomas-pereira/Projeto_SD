@@ -44,7 +44,6 @@ public class _TODO_RestPostsClient extends RestClient implements Posts {
 	public Result<Void> deletePost(String postId) {
 		Response r = target.path(postId)
 				.request()
-				.accept(MediaType.APPLICATION_JSON)
 				.delete();
 		return super.responseContents(r, Status.OK, new GenericType<Void>(){});
 	}
@@ -54,7 +53,6 @@ public class _TODO_RestPostsClient extends RestClient implements Posts {
 	public Result<Void> like(String postId, String userId, boolean isLiked) {
 		Response r = target.path(postId).path("likes").path(userId)
 				.request()
-				.accept(MediaType.APPLICATION_JSON)
 				.put(Entity.entity(isLiked, MediaType.APPLICATION_JSON));
 		return super.responseContents(r, Status.OK, new GenericType<Void>(){});
 	}
