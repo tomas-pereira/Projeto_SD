@@ -69,7 +69,7 @@ abstract class RestClient extends RetryClient {
 		return uri.toString();
 	}
 
-	static private ErrorCode errorCode(int status) {
+	static protected ErrorCode errorCode(int status) {
 		switch (status) {
 		case 200:
 		case 209:
