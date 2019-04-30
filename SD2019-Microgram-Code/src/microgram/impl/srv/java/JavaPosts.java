@@ -38,8 +38,10 @@ public class JavaPosts implements Posts {
 	}
 	
 	private void createProfilesClient() {
-		URI[] mediaURIs = Discovery.findUrisOf( "Microgram-Profiles", 1);
-		user = ClientFactory.createProfilesClient(mediaURIs[0]);
+		if(user == null) {
+			URI[] mediaURIs = Discovery.findUrisOf( "Microgram-Profiles", 1);
+			user = ClientFactory.createProfilesClient(mediaURIs[0]);
+		}
 	}
 
 	@Override
@@ -121,9 +123,7 @@ public class JavaPosts implements Posts {
 
 	@Override
 	public Result<List<String>> getFeed(String userId) {
-		if(user == null) {
-			createProfilesClient();
-		}
+		createProfilesClient();
 		
 		return error(NOT_IMPLEMENTED);
 	}

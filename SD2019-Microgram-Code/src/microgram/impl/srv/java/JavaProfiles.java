@@ -29,10 +29,17 @@ public class JavaProfiles extends RestResource implements microgram.api.java.Pro
 	protected Map<String, Profile> users = new HashMap<>();
 	protected Map<String, Set<String>> followers = new HashMap<>();
 	protected Map<String, Set<String>> following = new HashMap<>();
+	private Posts post;
 	
 	public JavaProfiles() {
-		URI[] mediaURIs = Discovery.findUrisOf( "PostsRestServer", 1);
-		//Posts posts = new ClientFactory.createPostsClient(mediaURIs[0]);
+		post = null;
+	}
+	
+	private void createPostClient() {
+		if(post == null) {
+			URI[] mediaURIs = Discovery.findUrisOf( "PostsRestServer", 1);
+			post = ClientFactory.createPostsClient(mediaURIs[0]);
+		}
 	}
 	
 	@Override
@@ -59,6 +66,9 @@ public class JavaProfiles extends RestResource implements microgram.api.java.Pro
 	
 	@Override
 	public Result<Void> deleteProfile(String userId) {
+
+		createPostClient();
+		
 		Profile res = users.remove(userId);
 		
 		if( res == null ) 
