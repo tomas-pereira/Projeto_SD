@@ -105,7 +105,7 @@ public class JavaPosts implements Posts {
 
 	@Override
 	public Result<List<String>> getFeed(String userId) {
-		//Profile user = users.get(userId);
+		
 		return error(NOT_IMPLEMENTED);
 	}
 }
