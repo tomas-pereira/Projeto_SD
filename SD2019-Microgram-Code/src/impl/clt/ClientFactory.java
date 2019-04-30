@@ -2,11 +2,14 @@ package impl.clt;
 
 import java.net.URI;
 
+/*import impl.clt.rest.RestMediaClient;
+import impl.clt.soap.SoapMediaClient;*/
 import microgram.impl.clt.java._TODO_RetryPostsClient;
 import microgram.impl.clt.java._TODO_RetryProfilesClient;
 import microgram.impl.clt.rest.*;
 import microgram.impl.clt.soap._TODO_SoapPostsClient;
 import microgram.impl.clt.soap._TODO_SoapProfilesClient;
+import microgram.api.java.Media;
 import microgram.api.java.Posts;
 import microgram.api.java.Profiles;
 
@@ -31,6 +34,16 @@ public class ClientFactory {
 			return new _TODO_RetryPostsClient(new _TODO_RestPostsClient(uri));
 		else if (uriString.endsWith(SOAP))
 			return new _TODO_RetryPostsClient(new _TODO_SoapPostsClient(uri));
+
+		throw new RuntimeException("Unknown service type..." + uri);
+	}
+	
+	public static Media getMediaClient(URI uri) {
+		String uriString = uri.toString();
+		/*if (uriString.endsWith(REST))
+			return new RestMediaClient(uri);
+		else if (uriString.endsWith(SOAP))
+			return new SoapMediaClient(uri);*/
 
 		throw new RuntimeException("Unknown service type..." + uri);
 	}

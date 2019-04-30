@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Set;
 
 import discovery.Discovery;
+import impl.clt.ClientFactory;
 import microgram.api.Post;
 import microgram.api.java.Posts;
 import microgram.api.java.Result;
@@ -32,7 +33,12 @@ public class JavaPosts implements Posts {
 	protected Map<String, Set<String>> userPosts = new HashMap<>();
 	
 	public JavaPosts() {
+		
+	}
+	
+	private void createProfilesClient() {
 		URI[] mediaURIs = Discovery.findUrisOf( "ProfiesRestServer", 1);
+		Profiles profiles = ClientFactory.createProfilesClient(mediaURIs[0]);
 	}
 
 	@Override
