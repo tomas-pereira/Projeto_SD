@@ -5,17 +5,24 @@ import static microgram.api.java.Result.ok;
 import static microgram.api.java.Result.ErrorCode.CONFLICT;
 import static microgram.api.java.Result.ErrorCode.NOT_FOUND;
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import discovery.Discovery;
+import impl.clt.ClientFactory;
 import microgram.api.Profile;
 import microgram.api.java.Result;
 import microgram.api.java.Result.ErrorCode;
 import microgram.impl.srv.rest.RestResource;
+
+import microgram.api.Post;
+import microgram.api.java.Posts;
 
 public class JavaProfiles extends RestResource implements microgram.api.java.Profiles {
 
@@ -23,6 +30,10 @@ public class JavaProfiles extends RestResource implements microgram.api.java.Pro
 	protected Map<String, Set<String>> followers = new HashMap<>();
 	protected Map<String, Set<String>> following = new HashMap<>();
 	
+	public JavaProfiles() {
+		URI[] mediaURIs = Discovery.findUrisOf( "PostsRestServer", 1);
+		//Posts posts = new ClientFactory.createPostsClient(mediaURIs[0]);
+	}
 	
 	@Override
 	public Result<Profile> getProfile(String userId) {
@@ -48,7 +59,17 @@ public class JavaProfiles extends RestResource implements microgram.api.java.Pro
 	
 	@Override
 	public Result<Void> deleteProfile(String userId) {
-		return Result.error(ErrorCode.NOT_IMPLEMENTED);
+		Profile res = users.remove(userId);
+		
+		if( res == null ) 
+			return error(NOT_FOUND);
+		
+		for( Entry<String, Set<String>> entry : followers.entrySet() )
+			entry.getValue().remove(userId);
+		for( Entry<String, Set<String>> entry : following.entrySet() )
+			entry.getValue().remove(userId);
+		
+		return ok();
 	}
 	
 	@Override
@@ -88,5 +109,14 @@ public class JavaProfiles extends RestResource implements microgram.api.java.Pro
 			return error(NOT_FOUND);
 		else
 			return ok(s1.contains( userId2 ) && s2.contains( userId1 ));
+	}
+
+	@Override
+	public Result<Set<Profile>> getFollwed(String userId) {
+		Profile res = users.get( userId );
+		if( res == null ) 
+			return error(NOT_FOUND);
+
+		return ok();
 	}
 }

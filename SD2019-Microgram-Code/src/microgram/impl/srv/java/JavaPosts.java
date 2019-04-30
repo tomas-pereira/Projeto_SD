@@ -6,6 +6,7 @@ import static microgram.api.java.Result.ErrorCode.CONFLICT;
 import static microgram.api.java.Result.ErrorCode.NOT_FOUND;
 import static microgram.api.java.Result.ErrorCode.NOT_IMPLEMENTED;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,17 +15,32 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import discovery.Discovery;
+import impl.clt.ClientFactory;
 import microgram.api.Post;
 import microgram.api.java.Posts;
 import microgram.api.java.Result;
 import microgram.api.java.Result.ErrorCode;
 import utils.Hash;
 
+import microgram.api.Profile;
+import microgram.api.java.Profiles;
+
 public class JavaPosts implements Posts {
 
 	protected Map<String, Post> posts = new HashMap<>();
 	protected Map<String, Set<String>> likes = new HashMap<>();
 	protected Map<String, Set<String>> userPosts = new HashMap<>();
+	private Profiles user;
+	
+	public JavaPosts() {
+		user = null;
+	}
+	
+	private void createProfilesClient() {
+		URI[] mediaURIs = Discovery.findUrisOf( "Microgram-Profiles", 1);
+		user = ClientFactory.createProfilesClient(mediaURIs[0]);
+	}
 
 	@Override
 	public Result<Post> getPost(String postId) {
@@ -105,6 +121,9 @@ public class JavaPosts implements Posts {
 
 	@Override
 	public Result<List<String>> getFeed(String userId) {
+		if(user == null) {
+			createProfilesClient();
+		}
 		
 		return error(NOT_IMPLEMENTED);
 	}

@@ -2,6 +2,7 @@ package microgram.impl.clt.rest;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
@@ -66,5 +67,14 @@ public class _TODO_RestProfilesClient extends RestClient implements Profiles {
 				.accept(MediaType.APPLICATION_JSON)
 				.get();
 		return super.responseContents(r, Status.OK, new GenericType<Boolean>() {});
+	}
+
+	@Override
+	public Result<Set<Profile>> getFollwed(String userId) {
+		Response r = target.path(userId).path("following")
+				.request()
+				.accept(MediaType.APPLICATION_JSON)
+				.get();
+		return super.responseContents(r, Status.OK, new GenericType<Set<Profile>>() {});
 	}
 }
