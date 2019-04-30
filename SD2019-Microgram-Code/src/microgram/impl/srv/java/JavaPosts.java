@@ -31,14 +31,15 @@ public class JavaPosts implements Posts {
 	protected Map<String, Post> posts = new HashMap<>();
 	protected Map<String, Set<String>> likes = new HashMap<>();
 	protected Map<String, Set<String>> userPosts = new HashMap<>();
+	private Profiles user;
 	
 	public JavaPosts() {
-		
+		user = null;
 	}
 	
 	private void createProfilesClient() {
-		URI[] mediaURIs = Discovery.findUrisOf( "ProfiesRestServer", 1);
-		Profiles profiles = ClientFactory.createProfilesClient(mediaURIs[0]);
+		URI[] mediaURIs = Discovery.findUrisOf( "Microgram-Profiles", 1);
+		user = ClientFactory.createProfilesClient(mediaURIs[0]);
 	}
 
 	@Override
@@ -120,7 +121,11 @@ public class JavaPosts implements Posts {
 
 	@Override
 	public Result<List<String>> getFeed(String userId) {
-		//Profiles user = users.get(userId);
+		if(user == null) {
+			createProfilesClient();
+		}
+		
+		
 		return error(NOT_IMPLEMENTED);
 	}
 }
