@@ -10,6 +10,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -20,10 +21,8 @@ import impl.clt.ClientFactory;
 import microgram.api.Post;
 import microgram.api.java.Posts;
 import microgram.api.java.Result;
-import microgram.api.java.Result.ErrorCode;
 import utils.Hash;
 
-import microgram.api.Profile;
 import microgram.api.java.Profiles;
 
 public class JavaPosts implements Posts {
@@ -126,5 +125,27 @@ public class JavaPosts implements Posts {
 		createProfilesClient();
 		
 		return error(NOT_IMPLEMENTED);
+	}
+
+	@Override
+	public Result<Void> deleteAllPosts(String userId) {
+		
+		createProfilesClient();
+		
+		Set<String> userposts = userPosts.get(userId);
+		Iterator<String> it = userposts.iterator();
+		
+		if(userposts == null)
+			return error(NOT_FOUND);
+		else {
+			while(it.hasNext()) {
+				String postId = it.next();
+				Post p = posts.remove(postId);
+				userPosts.remove(postId);
+				likes.remove(postId);
+			}
+			
+			return ok();
+		}
 	}
 }

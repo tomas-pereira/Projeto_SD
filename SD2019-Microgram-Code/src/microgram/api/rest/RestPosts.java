@@ -57,4 +57,8 @@ static final String PATH="/posts";
 	@Path("/feed/{userId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	List<String> getFeed( @PathParam("userId") String userId);
+	
+	@DELETE
+	@Path("{userId}")
+	void deleteAllPosts(@PathParam("userId") String userId );
 }
