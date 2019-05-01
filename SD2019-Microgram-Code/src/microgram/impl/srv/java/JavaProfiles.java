@@ -37,7 +37,7 @@ public class JavaProfiles extends RestResource implements microgram.api.java.Pro
 	
 	private void createPostClient() {
 		if(post == null) {
-			URI[] mediaURIs = Discovery.findUrisOf( "PostsRestServer", 1);
+			URI[] mediaURIs = Discovery.findUrisOf( "Microgram-Posts", 1);
 			post = ClientFactory.createPostsClient(mediaURIs[0]);
 		}
 	}
