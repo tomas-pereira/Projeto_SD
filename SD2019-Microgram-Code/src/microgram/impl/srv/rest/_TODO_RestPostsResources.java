@@ -12,7 +12,7 @@ public class _TODO_RestPostsResources extends RestResource implements RestPosts 
 
 	final Posts impl;
 		
-	public _TODO_RestPostsResources(URI serverUri) {
+	public _TODO_RestPostsResources(String serverUri) {
 		this.impl = new JavaPosts();
 	}
 	

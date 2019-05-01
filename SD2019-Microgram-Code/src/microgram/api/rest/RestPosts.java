@@ -59,6 +59,6 @@ static final String PATH="/posts";
 	List<String> getFeed( @PathParam("userId") String userId);
 	
 	@DELETE
-	@Path("{userId}")
+	@Path("/delete_all/{userId}")
 	void deleteAllPosts(@PathParam("userId") String userId );
 }
