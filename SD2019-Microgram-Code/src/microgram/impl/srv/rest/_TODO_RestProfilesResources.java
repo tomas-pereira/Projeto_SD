@@ -45,7 +45,7 @@ public class _TODO_RestProfilesResources extends RestResource implements RestPro
 	}
 
 	@Override
-	public Set<Profile> getFollowed(String userId) {
+	public Set<String> getFollowed(String userId) {
 		return super.resultOrThrow(impl.getFollwed(userId));
 	}
 

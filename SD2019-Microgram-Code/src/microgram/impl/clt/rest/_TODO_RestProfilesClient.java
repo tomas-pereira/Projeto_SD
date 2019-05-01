@@ -70,11 +70,11 @@ public class _TODO_RestProfilesClient extends RestClient implements Profiles {
 	}
 
 	@Override
-	public Result<Set<Profile>> getFollwed(String userId) {
+	public Result<Set<String>> getFollwed(String userId) {
 		Response r = target.path(userId).path("following")
 				.request()
 				.accept(MediaType.APPLICATION_JSON)
 				.get();
-		return super.responseContents(r, Status.OK, new GenericType<Set<Profile>>() {});
+		return super.responseContents(r, Status.OK, new GenericType<Set<String>>() {});
 	}
 }

@@ -51,7 +51,7 @@ public class _TODO_SoapProfilesClient extends SoapClient implements Profiles {
 	}
 
 	@Override
-	public Result<Set<Profile>> getFollwed(String userId) {
+	public Result<Set<String>> getFollwed(String userId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

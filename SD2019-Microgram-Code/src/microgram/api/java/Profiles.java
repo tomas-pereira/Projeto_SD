@@ -59,5 +59,5 @@ public interface Profiles {
 	 */
 	Result<Boolean> isFollowing( String userId1, String userId2);
 	
-	Result<Set<Profile>> getFollwed(String userId);
+	Result<Set<String>> getFollwed(String userId);
 }

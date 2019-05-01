@@ -52,6 +52,6 @@ public interface RestProfiles {
 	@GET
 	@Path("{userId}/following")
 	@Produces(MediaType.APPLICATION_JSON)
-	Set<Profile> getFollowed(@PathParam("userId") String userId1);
+	Set<String> getFollowed(@PathParam("userId") String userId1);
 	
 }

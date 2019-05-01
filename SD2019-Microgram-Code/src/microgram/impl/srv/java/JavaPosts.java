@@ -10,13 +10,11 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import discovery.Discovery;
 import impl.clt.ClientFactory;
 import microgram.api.Post;
 import microgram.api.java.Posts;
@@ -30,18 +28,19 @@ public class JavaPosts implements Posts {
 	protected Map<String, Post> posts = new HashMap<>();
 	protected Map<String, Set<String>> likes = new HashMap<>();
 	protected Map<String, Set<String>> userPosts = new HashMap<>();
-	private Profiles user;
+	private Profiles profiles;
 	
-	public JavaPosts() {
-		user = null;
+	public JavaPosts(URI serverUri) {
+		//user = null;
+		profiles = ClientFactory.createProfilesClient(serverUri);
 	}
 	
-	private void createProfilesClient() {
+	/*private void createProfilesClient() {
 		if(user == null) {
 			URI[] mediaURIs = Discovery.findUrisOf( "Microgram-Profiles", 1);
 			user = ClientFactory.createProfilesClient(mediaURIs[0]);
 		}
-	}
+	}*/
 
 	@Override
 	public Result<Post> getPost(String postId) {
@@ -122,25 +121,28 @@ public class JavaPosts implements Posts {
 
 	@Override
 	public Result<List<String>> getFeed(String userId) {
-		createProfilesClient();
+		Set<String> result = new HashSet<String>();;		
+		Set<String> followed = profiles.getFollwed(userId).value();
 		
-		return error(NOT_IMPLEMENTED);
+		for(String followedId: followed) {
+			result.addAll(getPosts(followedId).value());
+		}
+		
+
+		return ok(new ArrayList<String>(result));
 	}
 
 	@Override
 	public Result<Void> deleteAllPosts(String userId) {
 		
-		createProfilesClient();
-		
 		Set<String> userposts = userPosts.get(userId);
-		Iterator<String> it = userposts.iterator();
 		
 		if(userposts == null)
 			return error(NOT_FOUND);
 		else {
-			while(it.hasNext()) {
-				String postId = it.next();
-				Post p = posts.remove(postId);
+			
+			for(String postId: userposts) {
+				posts.remove(postId);
 				userPosts.remove(postId);
 				likes.remove(postId);
 			}

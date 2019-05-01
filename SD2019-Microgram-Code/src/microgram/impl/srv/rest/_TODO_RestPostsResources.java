@@ -1,6 +1,7 @@
 package microgram.impl.srv.rest;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import microgram.api.Post;
@@ -12,8 +13,8 @@ public class _TODO_RestPostsResources extends RestResource implements RestPosts 
 
 	final Posts impl;
 		
-	public _TODO_RestPostsResources(String serverUri) {
-		this.impl = new JavaPosts();
+	public _TODO_RestPostsResources(String serverUri) throws URISyntaxException {
+		this.impl = new JavaPosts(new URI(serverUri));
 	}
 	
 	@Override

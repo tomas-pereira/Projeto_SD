@@ -46,7 +46,7 @@ public class _TODO_RetryProfilesClient extends RetryClient implements Profiles {
 	}
 
 	@Override
-	public Result<Set<Profile>> getFollwed(String userId) {
+	public Result<Set<String>> getFollwed(String userId) {
 		return reTry( ()-> impl.getFollwed(userId));
 	}
 
