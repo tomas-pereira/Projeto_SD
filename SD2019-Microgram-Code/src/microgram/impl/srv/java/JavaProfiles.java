@@ -69,6 +69,8 @@ public class JavaProfiles extends RestResource implements microgram.api.java.Pro
 
 		createPostClient();
 		
+		post.deleteAllPosts(userId);
+		
 		Profile res = users.remove(userId);
 		
 		if( res == null ) 
