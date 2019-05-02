@@ -4,7 +4,6 @@ import static microgram.api.java.Result.error;
 import static microgram.api.java.Result.ok;
 import static microgram.api.java.Result.ErrorCode.CONFLICT;
 import static microgram.api.java.Result.ErrorCode.NOT_FOUND;
-import static microgram.api.java.Result.ErrorCode.NOT_IMPLEMENTED;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -29,18 +28,17 @@ public class JavaPosts implements Posts {
 	protected Map<String, Set<String>> likes = new HashMap<>();
 	protected Map<String, Set<String>> userPosts = new HashMap<>();
 	private Profiles profiles;
-	
+
 	public JavaPosts(URI serverUri) {
-		//user = null;
+		// user = null;
 		profiles = ClientFactory.createProfilesClient(serverUri);
 	}
-	
-	/*private void createProfilesClient() {
-		if(user == null) {
-			URI[] mediaURIs = Discovery.findUrisOf( "Microgram-Profiles", 1);
-			user = ClientFactory.createProfilesClient(mediaURIs[0]);
-		}
-	}*/
+
+	/*
+	 * private void createProfilesClient() { if(user == null) { URI[] mediaURIs =
+	 * Discovery.findUrisOf( "Microgram-Profiles", 1); user =
+	 * ClientFactory.createProfilesClient(mediaURIs[0]); } }
+	 */
 
 	@Override
 	public Result<Post> getPost(String postId) {
@@ -54,22 +52,21 @@ public class JavaPosts implements Posts {
 	@Override
 	public Result<Void> deletePost(String postId) {
 		Post post = posts.remove(postId);
-		
-		if(post == null)
+
+		if (post == null)
 			return error(NOT_FOUND);
-		else {
-			likes.remove(postId);
-			userPosts.get(post.getOwnerId()).remove(postId);
-			return ok();
-		}
 		
+		likes.remove(postId);
+		userPosts.get(post.getOwnerId()).remove(postId);
+		
+		return ok();
 	}
 
 	@Override
 	public Result<String> createPost(Post post) {
 		String postId = Hash.of(post.getOwnerId(), post.getMediaUrl());
 		if (posts.putIfAbsent(postId, post) == null) {
-			
+
 			likes.put(postId, new HashSet<>());
 
 			Set<String> posts = userPosts.get(post.getOwnerId());
@@ -121,33 +118,33 @@ public class JavaPosts implements Posts {
 
 	@Override
 	public Result<List<String>> getFeed(String userId) {
-		Set<String> result = new HashSet<String>();;		
-		Set<String> followed = profiles.getFollwed(userId).value();
+		Set<String> result = new HashSet<String>();
+		Result<Set<String>> getFollowed = profiles.getFollwed(userId);
+
+		if(!getFollowed.isOK())
+			return error(NOT_FOUND);
 		
-		for(String followedId: followed) {
+		Set<String> followed = getFollowed.value();
+		
+		for (String followedId : followed) {
 			result.addAll(getPosts(followedId).value());
 		}
-		
 
 		return ok(new ArrayList<String>(result));
 	}
 
-	@Override
-	public Result<Void> deleteAllPosts(String userId) {
-		
+	public void deleteAllPosts(String userId) {
+
 		Set<String> userposts = userPosts.get(userId);
-		
-		if(userposts == null)
-			return error(NOT_FOUND);
-		else {
-			
-			for(String postId: userposts) {
+
+		if (userposts != null) {
+
+			for (String postId : userposts) {
 				posts.remove(postId);
 				userPosts.remove(postId);
 				likes.remove(postId);
 			}
-			
-			return ok();
+			userPosts.remove(userId);
 		}
 	}
 }

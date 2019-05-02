@@ -86,13 +86,4 @@ public class _TODO_RestPostsClient extends RestClient implements Posts {
 				.get();
 		return super.responseContents(r, Status.OK, new GenericType<List<String>>(){});
 	}
-
-
-	@Override
-	public Result<Void> deleteAllPosts(String userId) {
-		Response r = target.path("delete_all").path(userId)
-				.request()
-				.delete();
-		return super.responseContents(r, Status.OK, new GenericType<Void>(){});
-	}
 }

@@ -2,6 +2,7 @@ package microgram.impl.srv.rest;
 
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Set;
 
@@ -14,8 +15,8 @@ public class _TODO_RestProfilesResources extends RestResource implements RestPro
 
 	final Profiles impl;
 	
-	public _TODO_RestProfilesResources(String serverUri) {
-		this.impl = new JavaProfiles();
+	public _TODO_RestProfilesResources(String serverUri) throws URISyntaxException {
+		this.impl = new JavaProfiles(new URI(serverUri));
 	}
 	
 	@Override

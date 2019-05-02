@@ -65,9 +65,4 @@ public class _TODO_SoapPostsClient extends SoapClient implements Posts {
 		return null;
 	}
 
-	@Override
-	public Result<Void> deleteAllPosts(String userId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

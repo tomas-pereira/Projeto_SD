@@ -69,5 +69,4 @@ public interface Posts {
 	 */
 	Result<List<String>> getFeed( String userId);
 	
-	Result<Void> deleteAllPosts(String userId);
 }

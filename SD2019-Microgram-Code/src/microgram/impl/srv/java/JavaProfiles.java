@@ -14,14 +14,11 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import discovery.Discovery;
 import impl.clt.ClientFactory;
 import microgram.api.Profile;
 import microgram.api.java.Result;
-import microgram.api.java.Result.ErrorCode;
 import microgram.impl.srv.rest.RestResource;
 
-import microgram.api.Post;
 import microgram.api.java.Posts;
 
 public class JavaProfiles extends RestResource implements microgram.api.java.Profiles {
@@ -29,18 +26,18 @@ public class JavaProfiles extends RestResource implements microgram.api.java.Pro
 	protected Map<String, Profile> users = new HashMap<>();
 	protected Map<String, Set<String>> followers = new HashMap<>();
 	protected Map<String, Set<String>> following = new HashMap<>();
-	private Posts post;
+	private JavaPosts posts;
 	
-	public JavaProfiles() {
-		post = null;
+	public JavaProfiles(URI serverUri) {
+		posts = (JavaPosts) ClientFactory.createPostsClient(serverUri);
 	}
 	
-	private void createPostClient() {
+	/*private void createPostClient() {
 		if(post == null) {
 			URI[] mediaURIs = Discovery.findUrisOf( "Microgram-Posts", 1);
 			post = ClientFactory.createPostsClient(mediaURIs[0]);
 		}
-	}
+	}*/
 	
 	@Override
 	public Result<Profile> getProfile(String userId) {
@@ -65,21 +62,22 @@ public class JavaProfiles extends RestResource implements microgram.api.java.Pro
 	}
 	
 	@Override
-	public Result<Void> deleteProfile(String userId) {
-
-		createPostClient();
-		
-		post.deleteAllPosts(userId);
-		
+	public Result<Void> deleteProfile(String userId) {	
 		Profile res = users.remove(userId);
 		
 		if( res == null ) 
 			return error(NOT_FOUND);
 		
-		for( Entry<String, Set<String>> entry : followers.entrySet() )
-			entry.getValue().remove(userId);
-		for( Entry<String, Set<String>> entry : following.entrySet() )
-			entry.getValue().remove(userId);
+		posts.deleteAllPosts(userId);
+		
+		for(String follower: followers.get(userId))
+			following.get(follower).remove(userId);
+		
+		for(String following: following.get(userId))
+			followers.get(following).remove(userId);
+		
+		followers.remove(userId);
+		following.remove(userId);
 		
 		return ok();
 	}

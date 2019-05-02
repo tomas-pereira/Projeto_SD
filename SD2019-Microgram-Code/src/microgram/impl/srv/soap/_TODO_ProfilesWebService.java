@@ -1,6 +1,8 @@
 package microgram.impl.srv.soap;
 
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import microgram.api.Profile;
@@ -13,8 +15,8 @@ public class _TODO_ProfilesWebService extends SoapService implements SoapProfile
 
 	final Profiles impl;
 	
-	protected _TODO_ProfilesWebService() {
-		this.impl = new JavaProfiles();
+	protected _TODO_ProfilesWebService(String serverUri) throws URISyntaxException {
+		this.impl = new JavaProfiles(new URI(serverUri));
 	}
 	
 	@Override
