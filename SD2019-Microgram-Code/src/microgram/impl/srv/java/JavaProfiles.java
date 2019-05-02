@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -26,10 +25,10 @@ public class JavaProfiles extends RestResource implements microgram.api.java.Pro
 	protected Map<String, Profile> users = new HashMap<>();
 	protected Map<String, Set<String>> followers = new HashMap<>();
 	protected Map<String, Set<String>> following = new HashMap<>();
-	private JavaPosts posts;
+	private Posts posts;
 	
 	public JavaProfiles(URI serverUri) {
-		posts = (JavaPosts) ClientFactory.createPostsClient(serverUri);
+		posts = ClientFactory.createPostsClient(serverUri);
 	}
 	
 	/*private void createPostClient() {

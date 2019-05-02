@@ -1,10 +1,10 @@
 package microgram.impl.srv.soap;
 
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
 
 
 public class PostsSoapServer {
-	private static Logger Log = Logger.getLogger(PostsSoapServer.class.getName());
+	//private static Logger Log = Logger.getLogger(PostsSoapServer.class.getName());
 
 	static {
 		System.setProperty("java.net.preferIPv4Stack", "true");

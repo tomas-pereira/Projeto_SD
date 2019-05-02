@@ -1,6 +1,6 @@
 package microgram.impl.srv.rest;
 
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
 
 import javax.ws.rs.WebApplicationException;
 
@@ -9,7 +9,7 @@ import microgram.api.rest.RestMediaStorage;
 import microgram.impl.srv.java.JavaMedia;
 
 public class RestMediaResources extends RestResource implements RestMediaStorage {
-	private static Logger Log = Logger.getLogger(RestMediaResources.class.getName());
+	//private static Logger Log = Logger.getLogger(RestMediaResources.class.getName());
 
 	
 	final String baseUri;

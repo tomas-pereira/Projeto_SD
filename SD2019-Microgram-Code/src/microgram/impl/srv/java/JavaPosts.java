@@ -65,9 +65,6 @@ public class JavaPosts implements Posts {
 	public Result<String> createPost(Post post) {
 		String userId = post.getOwnerId();
 		
-		if(!profiles.getProfile(userId).isOK())
-			return error(NOT_FOUND);
-		
 		String postId = Hash.of(userId, post.getMediaUrl());
 		if (posts.putIfAbsent(postId, post) == null) {
 

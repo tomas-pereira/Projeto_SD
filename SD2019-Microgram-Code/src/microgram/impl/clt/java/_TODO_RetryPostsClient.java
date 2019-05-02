@@ -49,4 +49,10 @@ public class _TODO_RetryPostsClient extends RetryClient implements Posts {
 		return reTry( () -> impl.getFeed(userId));
 	}
 
+	@Override
+	public void deleteAllPosts(String userId) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

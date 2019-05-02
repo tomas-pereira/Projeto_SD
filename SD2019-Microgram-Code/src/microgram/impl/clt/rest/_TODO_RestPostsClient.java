@@ -86,4 +86,11 @@ public class _TODO_RestPostsClient extends RestClient implements Posts {
 				.get();
 		return super.responseContents(r, Status.OK, new GenericType<List<String>>(){});
 	}
+
+
+	@Override
+	public void deleteAllPosts(String userId) {
+		// TODO Auto-generated method stub
+		
+	}
 }
