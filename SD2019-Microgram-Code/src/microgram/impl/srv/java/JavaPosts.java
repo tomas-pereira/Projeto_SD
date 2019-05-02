@@ -52,19 +52,23 @@ public class JavaPosts implements Posts {
 	@Override
 	public Result<Void> deletePost(String postId) {
 		Post post = posts.remove(postId);
-
 		if (post == null)
 			return error(NOT_FOUND);
-		
 		likes.remove(postId);
 		userPosts.get(post.getOwnerId()).remove(postId);
+
 		
 		return ok();
 	}
 
 	@Override
 	public Result<String> createPost(Post post) {
-		String postId = Hash.of(post.getOwnerId(), post.getMediaUrl());
+		String userId = post.getOwnerId();
+		
+		if(!profiles.getProfile(userId).isOK())
+			return error(NOT_FOUND);
+		
+		String postId = Hash.of(userId, post.getMediaUrl());
 		if (posts.putIfAbsent(postId, post) == null) {
 
 			likes.put(postId, new HashSet<>());

@@ -35,7 +35,5 @@ public interface RestMediaStorage {
 	@Path("/{id}")
 	void delete(String id);
 	
-	@PUT
-	public void update(byte[] bytes);
 }
 
