@@ -6,6 +6,7 @@ import static microgram.api.java.Result.ErrorCode.INTERNAL_ERROR;
 import static microgram.api.java.Result.ErrorCode.NOT_FOUND;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Random;
 
@@ -19,7 +20,7 @@ public class JavaMedia implements MediaStorage {
 	private static final String ROOT_DIR = "/tmp/microgram/";
 
 	static final Random random = new Random();
-	
+
 	public JavaMedia() {
 		new File(ROOT_DIR).mkdirs();
 	}
@@ -52,9 +53,22 @@ public class JavaMedia implements MediaStorage {
 			return Result.error(INTERNAL_ERROR);
 		}
 	}
-	
+
 	@Override
 	public Result<Void> delete(String id) {
-		throw new RuntimeException("Not implemented...");	
+		try {
+			File file = new File(ROOT_DIR + id + MEDIA_EXTENSION);
+			if (!file.exists())
+				return Result.error(NOT_FOUND);
+			else
+				Files.delete(file.toPath());
+			return Result.ok();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return Result.error(INTERNAL_ERROR);
+		}
+		
+
 	}
 }

@@ -141,9 +141,10 @@ public class JavaPosts implements Posts {
 		if (userposts != null) {
 
 			for (String postId : userposts) {
-				posts.remove(postId);
+				deletePost(postId);
+				/*posts.remove(postId);
 				userPosts.remove(postId);
-				likes.remove(postId);
+				likes.remove(postId);*/
 			}
 			userPosts.remove(userId);
 		}

@@ -67,8 +67,6 @@ public class JavaProfiles extends RestResource implements microgram.api.java.Pro
 		if( res == null ) 
 			return error(NOT_FOUND);
 		
-		posts.deleteAllPosts(userId);
-		
 		for(String follower: followers.get(userId))
 			following.get(follower).remove(userId);
 		
@@ -77,6 +75,8 @@ public class JavaProfiles extends RestResource implements microgram.api.java.Pro
 		
 		followers.remove(userId);
 		following.remove(userId);
+		
+		posts.deleteAllPosts(userId);
 		
 		return ok();
 	}
